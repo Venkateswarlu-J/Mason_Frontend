@@ -1,0 +1,7 @@
+.otp-grid { display: flex; gap: 8px; margin-bottom: 1rem; }
+.otp-box { flex: 1; height: 48px; text-align: center; font-size: 18px; font-family: var(--font-mono); font-weight: 500; border: 1px solid var(--clr-border); border-radius: var(--radius-md); background: var(--clr-surface); color: var(--clr-text-primary); outline: none; transition: border-color 0.15s; max-width: 56px; }
+.otp-box:focus { border-color: var(--clr-border-dark); box-shadow: 0 0 0 3px rgba(0,0,0,0.05); }
+.otp-box.filled { background: var(--clr-bg); }
+.otp-resend-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.otp-timer { font-size: 13px; color: var(--clr-text-muted); font-family: var(--font-mono); }
+.otp-resend-btn { font-size: 13px; background: none; border: none; font-family: var(--font-main); font-weight: 500; text-decoration: underline; text-underline-offset: 2px; }

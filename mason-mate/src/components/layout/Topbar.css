@@ -1,0 +1,4 @@
+.topbar { display: none; align-items: center; gap: 12px; padding: 0 1rem; height: 52px; background: var(--clr-surface); border-bottom: 1px solid var(--clr-border); position: sticky; top: 0; z-index: 40; }
+.topbar-menu-btn { background: none; border: none; font-size: 20px; color: var(--clr-text-primary); padding: 4px; }
+.topbar-title { font-size: 16px; font-weight: 500; }
+@media (max-width: 768px) { .topbar { display: flex; } }

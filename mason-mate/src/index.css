@@ -1,0 +1,72 @@
+/* ─── Mason-Mate Global Styles ─── */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --font-sans: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* Colors */
+  --color-bg:          #f7f7f5;
+  --color-surface:     #ffffff;
+  --color-border:      #e4e3de;
+  --color-border-soft: #eeede9;
+
+  --color-text-primary:   #1a1a18;
+  --color-text-secondary: #6b6a65;
+  --color-text-muted:     #9e9d98;
+
+  --color-accent:         #1a1a18;
+  --color-accent-text:    #ffffff;
+
+  --color-success:        #1D9E75;
+  --color-success-bg:     #E1F5EE;
+  --color-warning:        #BA7517;
+  --color-warning-bg:     #FAEEDA;
+  --color-danger:         #E24B4A;
+  --color-danger-bg:      #FCEBEB;
+  --color-info:           #185FA5;
+  --color-info-bg:        #E6F1FB;
+
+  /* Spacing */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, select, textarea {
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}

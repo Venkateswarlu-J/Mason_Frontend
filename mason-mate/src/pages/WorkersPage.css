@@ -1,0 +1,4 @@
+.page-wrap { max-width: 900px; }
+.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+.worker-name-cell { display: flex; align-items: center; gap: 10px; }
+.worker-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--clr-bg); border: 1px solid var(--clr-border); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; flex-shrink: 0; }
