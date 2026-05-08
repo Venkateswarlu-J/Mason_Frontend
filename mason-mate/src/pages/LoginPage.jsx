@@ -19,7 +19,10 @@ export default function LoginPage() {
   //  const [toast, setToast] = useState(null);
 
   // If already logged in, redirect away immediately — no route guard needed
-  if (token) return <Navigate to="/dashboard" replace />;
+  if (token){
+    console.log("here it navigates::"+token);
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
@@ -29,9 +32,11 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const res = await loginSupervisor(form);
+      console.log(res.data);
+      console.log("FULL RESPONSE:", JSON.stringify(res.data));
       if (res.data.success) {
+        // localStorage.setItem("token", res.data.jwt);
         login(res.data.jwt, res.data.supervisor);
-        // setToast({ message: "Login successful!", type: "success" });
         navigate("/dashboard", { replace: true });
       } else {
         setError(res.data.message || "Login failed.");

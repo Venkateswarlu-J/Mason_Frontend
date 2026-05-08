@@ -20,6 +20,8 @@ export function AuthProvider({ children }) {
   const login = (tokenValue, supervisorData) => {
     localStorage.setItem("token", tokenValue);
     localStorage.setItem("supervisor", JSON.stringify(supervisorData));
+    console.log("data is"+tokenValue+" "+supervisorData);
+    console.log("login Called");
     setToken(tokenValue);
     setSupervisor(supervisorData);
   };

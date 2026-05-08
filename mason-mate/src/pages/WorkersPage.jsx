@@ -8,14 +8,31 @@ import useToast from "../hooks/useToast";
 import "../styles/components.css";
 import "./WorkersPage.css";
 
-const EMPTY_FORM = { name: "", phone: "", role: "", dailyWage: "", email: "" };
+// Matches backend enum Categories exactly
+const CATEGORIES = [
+  { value: "ELECTRICIAN",   label: "Electrician"   },
+  { value: "MASON_MESTRI",  label: "Mason Mestri"  },
+  { value: "MASON_COOLIE",  label: "Mason Coolie"  },
+  { value: "WOOD_WORKER",   label: "Wood Worker"   },
+  { value: "WOOD_MESTRI",   label: "Wood Mestri"   },
+  { value: "TILES_MESTRI",  label: "Tiles Mestri"  },
+  { value: "TILES_WORKER",  label: "Tiles Worker"  },
+];
+
+const EMPTY_FORM = {
+  workerName:  "",
+  workerPhone: "",
+  workerCat:   "",
+  payPerDay:   "",
+  email:       "",
+};
 
 export default function WorkersPage() {
-  const [workers, setWorkers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [workers, setWorkers]     = useState([]);
+  const [loading, setLoading]     = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [form, setForm]     = useState(EMPTY_FORM);
-  const [saving, setSaving] = useState(false);
+  const [form, setForm]           = useState(EMPTY_FORM);
+  const [saving, setSaving]       = useState(false);
   const [formError, setFormError] = useState("");
   const { toast, showToast, clearToast } = useToast();
 
@@ -31,18 +48,27 @@ export default function WorkersPage() {
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
 
+  const closeModal = () => {
+    setShowModal(false);
+    setForm(EMPTY_FORM);
+    setFormError("");
+  };
+
   const handleAdd = async (e) => {
     e.preventDefault();
-    setFormError(""); setSaving(true);
+    setFormError("");
+    setSaving(true);
     try {
-      await addWorker(form);
+      const res=await addWorker(form);
       showToast("Worker added successfully", "success");
-      setShowModal(false);
-      setForm(EMPTY_FORM);
-      fetchWorkers();
+      closeModal();
+      // fetchWorkers();
+      await getAllWorkers();
     } catch (err) {
       setFormError(err.response?.data?.message || "Failed to add worker.");
-    } finally { setSaving(false); }
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleRemove = async (id, name) => {
@@ -51,18 +77,30 @@ export default function WorkersPage() {
       await removeWorker(id);
       showToast("Worker removed", "info");
       fetchWorkers();
-    } catch { showToast("Failed to remove worker", "error"); }
+    } catch {
+      showToast("Failed to remove worker", "error");
+    }
+  };
+
+  // Format enum value for display: MASON_MESTRI → Mason Mestri
+  const formatCat = (val) => {
+    if (!val) return "—";
+    const found = CATEGORIES.find(c => c.value === val);
+    return found ? found.label : val;
   };
 
   return (
     <div className="page-wrap">
       {toast && <Toast message={toast.message} type={toast.type} onClose={clearToast} />}
+
       <div className="page-header">
         <h1>Workers</h1>
         <button className="btn btn-primary" onClick={() => setShowModal(true)}>+ Add worker</button>
       </div>
 
-      {loading ? <Spinner fullPage /> : workers.length === 0 ? (
+      {loading ? (
+        <Spinner fullPage />
+      ) : workers.length === 0 ? (
         <EmptyState icon="⬡" title="No workers yet" message="Add your first worker to get started."
           action={<button className="btn btn-primary" onClick={() => setShowModal(true)}>Add worker</button>} />
       ) : (
@@ -70,7 +108,12 @@ export default function WorkersPage() {
           <table className="data-table">
             <thead>
               <tr>
-                <th>Name</th><th>Role</th><th>Phone</th><th>Daily wage</th><th></th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Phone</th>
+                <th>Project Name</th>
+                <th>Daily wage</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -78,15 +121,27 @@ export default function WorkersPage() {
                 <tr key={w.id}>
                   <td>
                     <div className="worker-name-cell">
-                      <div className="worker-avatar">{w.name?.[0]?.toUpperCase()}</div>
-                      {w.name}
+                      <div className="worker-avatar">{w.workerName?.[0]?.toUpperCase()}</div>
+                      {w.workerName}
                     </div>
                   </td>
-                  <td style={{color:"var(--clr-text-secondary)"}}>{w.role || "—"}</td>
-                  <td style={{fontFamily:"var(--font-mono)",fontSize:13}}>{w.phone || "—"}</td>
-                  <td style={{fontFamily:"var(--font-mono)",fontSize:13}}>₹{w.dailyWage || "—"}</td>
+                  <td style={{ color: "var(--clr-text-secondary)" }}>
+                    {formatCat(w.workerCat)}
+                  </td>
+                  <td style={{ fontFamily: "var(--font-mono)", fontSize: 13 }}>
+                    {w.workerPhone || "—"}
+                  </td>
+                  <td style={{ fontFamily: "var(--font-mono)", fontSize: 13 }}>
+                    {w.projectName || "—"}
+                  </td>
+                  <td style={{ fontFamily: "var(--font-mono)", fontSize: 13 }}>
+                    ₹{w.payPerDay || "—"}
+                  </td>
                   <td>
-                    <button className="btn btn-danger btn-sm" onClick={() => handleRemove(w.id, w.name)}>Remove</button>
+                    <button className="btn btn-danger btn-sm"
+                      onClick={() => handleRemove(w.id, w.workerName)}>
+                      Remove
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -96,34 +151,60 @@ export default function WorkersPage() {
       )}
 
       {showModal && (
-        <Modal title="Add worker" onClose={() => { setShowModal(false); setForm(EMPTY_FORM); setFormError(""); }}>
-          <form onSubmit={handleAdd} style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
+        <Modal title="Add worker" onClose={closeModal}>
+          <form onSubmit={handleAdd} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+
             <div className="form-field">
               <label className="form-label">Full name *</label>
-              <input className="form-input" name="name" placeholder="Suresh Kumar" value={form.name} onChange={handleChange} required />
+              <input className="form-input" name="workerName"
+                placeholder="Suresh Kumar"
+                value={form.workerName} onChange={handleChange} required />
             </div>
+
             <div className="form-field">
-              <label className="form-label">Role / Trade</label>
-              <input className="form-input" name="role" placeholder="Mason, Helper, Electrician..." value={form.role} onChange={handleChange} />
+              <label className="form-label">Category *</label>
+              <select className="form-select" name="workerCat"
+                value={form.workerCat} onChange={handleChange} required>
+                <option value="">Select a category</option>
+                {CATEGORIES.map(c => (
+                  <option key={c.value} value={c.value}>{c.label}</option>
+                ))}
+              </select>
             </div>
+
             <div className="form-field">
               <label className="form-label">Phone number *</label>
-              <input className="form-input" name="phone" placeholder="+91 98765 43210" value={form.phone} onChange={handleChange} required />
+              <input className="form-input" name="workerPhone"
+                placeholder="+91 98765 43210"
+                value={form.workerPhone} onChange={handleChange} required />
             </div>
+
             <div className="form-field">
               <label className="form-label">Daily wage (₹) *</label>
-              <input className="form-input" name="dailyWage" type="number" placeholder="600" value={form.dailyWage} onChange={handleChange} required />
+              <input className="form-input" name="payPerDay" type="number"
+                placeholder="600"
+                value={form.payPerDay} onChange={handleChange} required />
             </div>
+
             <div className="form-field">
-              <label className="form-label">Email (optional — sends login credentials)</label>
-              <input className="form-input" name="email" type="email" placeholder="worker@email.com" value={form.email} onChange={handleChange} />
-              <p className="form-hint">If no email, default password <strong>worker1234</strong> will be set.</p>
+              <label className="form-label">Email (optional)</label>
+              <input className="form-input" name="email" type="email"
+                placeholder="worker@email.com"
+                value={form.email} onChange={handleChange} />
+              <p className="form-hint">
+                If no email provided, default password <strong>worker1234</strong> will be set.
+              </p>
             </div>
+
             {formError && <p className="form-error">{formError}</p>}
-            <div style={{display:"flex",gap:8,justifyContent:"flex-end",marginTop:"0.5rem"}}>
-              <button type="button" className="btn btn-outline" onClick={() => setShowModal(false)}>Cancel</button>
-              <button type="submit" className="btn btn-primary" disabled={saving}>{saving ? "Saving..." : "Add worker"}</button>
+
+            <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: "0.5rem" }}>
+              <button type="button" className="btn btn-outline" onClick={closeModal}>Cancel</button>
+              <button type="submit" className="btn btn-primary" disabled={saving}>
+                {saving ? "Saving..." : "Add worker"}
+              </button>
             </div>
+
           </form>
         </Modal>
       )}
