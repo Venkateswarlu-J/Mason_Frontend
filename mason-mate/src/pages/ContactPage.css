@@ -1,0 +1,162 @@
+/* ContactPage.css */
+
+/* Two-column layout */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 460px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (max-width: 920px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Left column ── */
+.contact-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--clr-text-primary);
+  margin: 0;
+}
+
+.contact-intro {
+  font-size: 0.93rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.8;
+  margin: 0;
+  max-width: 420px;
+}
+
+/* Reason list */
+.contact-reasons {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--clr-border, #e5e5e5);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.contact-reason {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  padding: 1rem 1.25rem;
+  background: var(--clr-surface, #fff);
+  border-bottom: 1px solid var(--clr-border, #e5e5e5);
+  transition: background 0.12s;
+}
+
+.contact-reason:last-child {
+  border-bottom: none;
+}
+
+.contact-reason:hover {
+  background: var(--clr-surface-alt, #f8f9fa);
+}
+
+.contact-reason-icon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.contact-reason-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--clr-text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.contact-reason-desc {
+  font-size: 0.81rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.6;
+}
+
+/* Direct email strip */
+.contact-email-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--clr-border, #e5e5e5);
+  border-left: 4px solid var(--clr-primary, #2563eb);
+  border-radius: 8px;
+  background: var(--clr-surface, #fff);
+}
+
+.contact-email-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--clr-text-secondary);
+}
+
+.contact-email-link {
+  font-size: 0.88rem;
+  color: var(--clr-primary, #2563eb);
+  text-decoration: none;
+  font-family: var(--font-mono);
+}
+
+.contact-email-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Right column ── */
+.contact-right {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.contact-form-card {
+  background: var(--clr-surface, #fff);
+  border: 1px solid var(--clr-border, #e5e5e5);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.07);
+}
+
+.contact-form-header {
+  background: var(--clr-primary, #2563eb);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 14px 1.75rem;
+}
+
+.contact-form-card form {
+  padding: 1.5rem 1.75rem 1.75rem;
+}
+
+/* Two inputs side by side */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+}
+
+@media (max-width: 480px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.contact-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 0.65rem 1rem;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}

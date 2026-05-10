@@ -13,6 +13,11 @@ import CreatePasswordPage from "./pages/CreatePasswordPage";
 import LoginPage          from "./pages/LoginPage";
 import DashboardPage      from "./pages/DashboardPage";
 import WorkersPage        from "./pages/WorkersPage";
+import ProjectPage from "./pages/ProjectsPage";
+import PaymentPage from "./pages/PaymentPage";
+import AttendancePage from "./pages/AttendancePage";
+import ContactPage from "./pages/ContactPage";
+import AboutPage from "./pages/AboutPage";
 
 const Placeholder = ({ title }) => (
   <div style={{ padding: "2rem", maxWidth: 600 }}>
@@ -56,8 +61,8 @@ function AppRoutes() {
       <Routes>
         {/* Public */}
         <Route path="/"        element={<HomePage />} />
-        <Route path="/about"   element={<Placeholder title="About" />} />
-        <Route path="/contact" element={<Placeholder title="Contact" />} />
+        <Route path="/about"   element={<AboutPage/>} />
+        <Route path="/contact" element={<ContactPage/>} />
 
         {/* Auth — no guards, LoginPage handles its own redirect */}
         <Route path="/login"           element={<LoginPage />} />
@@ -68,12 +73,13 @@ function AppRoutes() {
         {/* Private */}
         <Route path="/dashboard"  element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
         <Route path="/workers"    element={<PrivateRoute><WorkersPage /></PrivateRoute>} />
-        <Route path="/projects"   element={<PrivateRoute><Placeholder title="Projects" /></PrivateRoute>} />
-        <Route path="/attendance" element={<PrivateRoute><Placeholder title="Attendance" /></PrivateRoute>} />
-        <Route path="/payments"   element={<PrivateRoute><Placeholder title="Payments" /></PrivateRoute>} />
+        <Route path="/projects"   element={<PrivateRoute><ProjectPage/></PrivateRoute>} />
+        <Route path="/attendance" element={<PrivateRoute><AttendancePage/></PrivateRoute>} />
+        <Route path="/payments"   element={<PrivateRoute><PaymentPage/></PrivateRoute>} />
+        <Route path="/contacts"   element={<PrivateRoute><ContactPage/></PrivateRoute>} />
         <Route path="/profile"    element={<PrivateRoute><Placeholder title="Profile" /></PrivateRoute>} />
 
-        {/* ✅ No wildcard redirect — unknown paths just show nothing, no redirect loop */}
+        {/* No wildcard redirect — unknown paths just show nothing, no redirect loop */}
         <Route path="*" element={
           <div style={{ padding: "2rem" }}>
             <h2>404 — Page not found</h2>

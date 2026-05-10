@@ -1,0 +1,54 @@
+/* AboutPage.css */
+
+.about-container {
+  max-width: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.about-hero {
+  padding: 2rem 2rem 1.5rem;
+  border: 1px solid var(--clr-border, #e5e5e5);
+  border-radius: 12px 12px 0 0;
+  background: var(--clr-primary, #2563eb);
+}
+
+.about-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.about-subtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.7;
+}
+
+.about-section {
+  padding: 1.5rem 2rem;
+  border: 1px solid var(--clr-border, #e5e5e5);
+  border-top: none;
+  background: var(--clr-surface, #fff);
+}
+
+.about-section:last-child {
+  border-radius: 0 0 12px 12px;
+}
+
+.about-section-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--clr-primary, #2563eb);
+  margin-bottom: 0.6rem;
+}
+
+.about-text {
+  font-size: 0.93rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.8;
+}

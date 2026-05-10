@@ -1,0 +1,60 @@
+/* AttendancePage.css */
+
+.att-date-badge {
+  font-size: 0.85rem;
+  color: var(--clr-text-secondary);
+  background: var(--clr-surface-alt, #f5f5f5);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+}
+
+/* Days this week pill */
+.days-badge {
+  display: inline-block;
+  background: var(--clr-surface-alt, #f0f0f0);
+  border-radius: 12px;
+  padding: 3px 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--clr-text-primary);
+}
+
+/* Status toggle group */
+.status-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.status-btn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1.5px solid var(--clr-border, #ddd);
+  background: transparent;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--clr-text-secondary);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.status-btn:hover {
+  border-color: var(--status-color, #888);
+  color: var(--status-color, #333);
+}
+
+.status-btn--active {
+  background: var(--status-color, #22c55e);
+  border-color: var(--status-color, #22c55e);
+  color: #fff;
+  font-weight: 600;
+}
+
+.mark-saved {
+  font-size: 13px;
+  color: #22c55e;
+  font-weight: 600;
+}

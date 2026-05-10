@@ -15,11 +15,12 @@ const PRIVATE_LINKS = [
   { to: "/projects",   label: "Projects"   },
   { to: "/attendance", label: "Attendance" },
   { to: "/payments",   label: "Payments"   },
+  { to: "/contact",    label: "Contact"      },
   { to: "/about",      label: "About"      },
 ];
 
 const PROFILE_ITEMS = [
-  { to: "/profile", label: "Edit profile", icon: "✎" },
+  { to: "/profile", label: "Change Password", icon: "✎" },
 ];
 
 export default function Header() {
@@ -53,11 +54,11 @@ export default function Header() {
     navigate("/");
   };
 
-  const initials = supervisor?.name
-    ? supervisor.name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()
+  const initials = supervisor?.sup_name
+    ? supervisor.sup_name.split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase()
     : "SV";
 
-  const firstName = supervisor?.name?.split(" ")[0] || "Supervisor";
+  const firstName = supervisor?.sup_name?.split(" ")[0] || "Supervisor";
 
   return (
     <>
@@ -139,7 +140,7 @@ export default function Header() {
             <>
               <div className="header-mobile-divider" />
               <p className="header-mobile-user">{supervisor?.name}</p>
-              <Link to="/profile" className="header-mobile-link" onClick={() => setMobileOpen(false)}>✎ Edit profile</Link>
+              <Link to="/ChangePasswordPage" className="header-mobile-link" onClick={() => setMobileOpen(false)}>✎ Edit profile</Link>
               <button className="header-mobile-link danger" onClick={handleLogout}>⇥ Logout</button>
             </>
           )}

@@ -38,8 +38,9 @@ export default function DashboardPage() {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <div>
-          <h1>Good morning, {supervisor?.name?.split(" ")[0] || "Supervisor"}</h1>
+        <div className="welcome-container">
+          <h1>Welcome back, {supervisor?.sup_name?.split(" ")[0] || "Supervisor"}</h1>
+          <h1>“Leadership is the ability to inspire confidence, create opportunities, and lead every challenge toward success.”</h1>
           <p className="dashboard-date">{today}</p>
         </div>
       </div>
